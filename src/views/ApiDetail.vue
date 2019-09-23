@@ -6,51 +6,11 @@
             </h3>
             <!--<el-button type="success" @click="isShowDebugWin=true" size="mini"> Debug</el-button>-->
         </div>
-
-        <div class="region">
-            <div class="region-title"><label>Base info</label></div>
-            <div class="region-content">
-                <table class="tb-detail">
-                    <tr >
-                        <th width="15%">
-                            Api path：
-                        </th>
-                        <td width="35%">
-                            {{currentApi.path}}
-                        </td>
-
-                        <th width="15%">
-                            Request method：
-                        </th>
-                        <td width="35%">
-                            {{currentApi.method}}
-                        </td>
-                    </tr>
-                    <!--<tr>-->
-                    <!--<th >-->
-                    <!--Request accepts：-->
-                    <!--</th>-->
-                    <!--<td colspan="3">-->
-                    <!--{{currentApi.consumes}}-->
-                    <!--</td>-->
-                    <!--</tr>-->
-                    <tr>
-                        <th>
-                            Description：
-                        </th>
-                        <td colspan="3">
-                            {{currentApi.description}}
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-
-        <el-tabs v-model="activeTab" class="region">
-            <el-tab-pane label="More info" name="info">
+        <el-tabs v-model="activeTab">
+            <el-tab-pane label="Api Info" name="info">
                 <api-info :currentApi="currentApi" :serviceId="serviceId"></api-info>
             </el-tab-pane>
-            <el-tab-pane label="Debug" name="debug">
+            <el-tab-pane label="Api Debug" name="debug">
                 <api-debug :currentApi="currentApi" :serviceId="serviceId" ref="apiDebug"></api-debug>
             </el-tab-pane>
         </el-tabs>

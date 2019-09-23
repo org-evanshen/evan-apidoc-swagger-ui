@@ -1,0 +1,142 @@
+<div>
+    <el-collapse v-model="actives">
+        <el-collapse-item title="Parameters" name="Parameters">
+            <div class="region-inner">
+                <!--<div class="region-title"><label>Parameters</label></div>-->
+                <div class="region-content">
+                    <table class="tb-list">
+                        <tr>
+                            <th width="15%" class="left">Name
+                            </th>
+                            <th class="left">
+                                Description
+                            </th>
+                            <th width="13%">
+                                Data type
+                            </th>
+                            <th width="13%">
+                                Parameter type
+                            </th>
+                            <th width="10%">
+                                Required
+                            </th>
+                        </tr>
+                        <template v-for="(param,index) in currentApi.parameters">
+                            <tr>
+                                <td>
+                                    {{param.name}}
+                                </td>
+                                <td>
+                                    <!--{{param}}-->
+                                    {{param.description}}
+
+                                </td>
+                                <td align="center">
+                                    <template v-if="param.type=='array'">
+                                        [{{param.items.type}}]
+                                    </template>
+                                    <template v-else-if="param.in=='body'">
+                                        <el-popover
+                                            placement="left"
+                                            width="1000"
+                                            trigger="click"
+                                            popper-class="model-popper">
+                                            <!--<div class="code-box" ></div>-->
+                                            <model :modelId="param.type" :serviceId="serviceId"
+                                                   :showAllowEmpty="true"></model>
+
+                                            <a href="javascript:void(0);" slot="reference">json</a>
+                                            <!--<a href="javascript:void(0);" @click="toggle(param.name)">{{param.type}}</a>-->
+                                        </el-popover>
+                                    </template>
+                                    <template v-else>{{param.type}}</template>
+                                </td>
+                                <td align="center">
+                                    {{param.in}}
+                                </td>
+                                <td align="center">
+                                    {{param.required}}
+                                </td>
+                            </tr>
+                        </template>
+                    </table>
+                </div>
+            </div>
+        </el-collapse-item>
+        <el-collapse-item title="Responses" name="Responses">
+            <div class="region-inner">
+                <!--<div class="region-title"><label>Responses</label></div>-->
+                <div class="region-content code-box code-json">
+                    {
+                    <div style="padding-left:20px;">
+                        code："SUCCESS" <a href="javascript:void(0);" @click="loadResult">more...</a>
+                        <br/>msg："成功" //失败时提示失败内容
+                        <template v-if="response.isArray && response.page">
+                            <br/>page：//分页结果：
+                            <pre>
+{
+    pageNo:"当前页码",
+    pageSize:"每页记录数",
+    pageCount:"共页数",
+    recordCount:"记录总数"
+}</pre>
+                        </template>
+                        <template v-if="responseData">
+                            <br/>data:
+                            <pre>
+{{responseData}}</pre>
+                        </template>
+                    </div>
+                    <!--                    <template v-if="response.isArray">-->
+                    <!--                        [-->
+                    <!--                        <model :modelId="response.type" :serviceId="serviceId"></model>-->
+                    <!--                        ,...]-->
+                    <!--                    </template>-->
+
+                    <!--                    <template v-else-if="response.isMap">-->
+                    <!--                        {"key":-->
+                    <!--                        <model :modelId="response.type" :serviceId="serviceId"></model>-->
+                    <!--                        ,...}-->
+                    <!--                    </template>-->
+
+                    <!--                    <template v-else-if="response.isRef">-->
+                    <!--                        <model :modelId="response.type" :serviceId="serviceId"></model>-->
+                    <!--                    </template>-->
+
+                    <!--                    <template v-else>-->
+                    <!--                        {{response.type}}-->
+                    <!--                        <template v-if="response.description && response.description != 'OK'">-->
+                    <!--                            {{response.description}}-->
+                    <!--                        </template>-->
+                    <!--                    </template>-->
+
+                    }
+
+                </div>
+            </div>
+        </el-collapse-item>
+    </el-collapse>
+    <el-dialog title="Api response code" :visible.sync="isShowApiResponseCode" :close-on-click-modal="false"
+               :close-on-press-escape="false" width="60%">
+        <table class="tb-list">
+            <tr>
+                <th width="25%" class="left">
+                    Code
+                </th>
+                <th class="left">
+                    Msg
+                </th>
+            </tr>
+            <template v-for="result in responseResult">
+                <tr>
+                    <td>
+                        {{result.code}}
+                    </td>
+                    <td>
+                        {{result.msg}}
+                    </td>
+                </tr>
+            </template>
+        </table>
+    </el-dialog>
+</div>

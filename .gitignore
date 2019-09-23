@@ -1,0 +1,9 @@
+.idea
+*.iml
+*.log
+
+node_modules/
+dist
+test/e2e/reports
+.log
+package-lock.json

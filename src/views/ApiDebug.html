@@ -1,0 +1,85 @@
+<div>
+    <div class="region-inner">
+        <div class="region-title"><label>Parameters</label></div>
+        <div class="region-content">
+            <table class="tb-list">
+                <tr>
+                    <th class="left" width="12%">Name</th>
+                    <th class="left">Debug</th>
+                    <th width="12%">Data type</th>
+                    <th width="12%">Parameter type</th>
+                    <th width="8%"> Required</th>
+                </tr>
+                <template v-for="(param,index) in currentApi.parameters">
+                    <tr>
+                        <td>
+                            {{param.name}}
+                        </td>
+                        <td style="padding-right: 60px">
+                            <template v-if="param.in=='body'">
+                                <el-input v-model="param.value" :rows="10" cols="80" type="textarea"></el-input>
+                            </template>
+                            <template v-else>
+                                <el-input v-model="param.value" size="mini"></el-input>
+                            </template>
+
+                            <div style="color: #999;padding-top:1px;font-size:12px;">
+                                {{param.description}}
+
+                                <template v-if="param.in=='body'">
+                                    <el-popover
+                                        placement="top"
+                                        width="1000"
+                                        trigger="click"
+                                        popper-class="model-popper">
+                                        <!--<div class="code-box" ></div>-->
+                                        <model :modelId="param.type" :serviceId="serviceId"
+                                               :showAllowEmpty="true"></model>
+
+                                        <a href="javascript:void(0);" slot="reference">格式</a>
+                                        <!--<a v-if="param.in=='body'" href="javascript:void(0);" @click="toggle(param.name)">格式</a>-->
+                                    </el-popover>
+                                </template>
+                            </div>
+                            <!--<div class="code-box" v-show="modelIsShow[param.name]"></div>-->
+                        </td>
+                        <td class="center">
+                            <template v-if="param.type=='array'">
+                                [{{param.items.type}}]
+                            </template>
+                            <template v-else-if="param.in=='body'">
+                                <el-popover
+                                    placement="left"
+                                    width="1000"
+                                    trigger="click"
+                                    popper-class="model-popper">
+                                    <!--<div class="code-box" ></div>-->
+                                    <model :modelId="param.type" :serviceId="serviceId" :showAllowEmpty="true"></model>
+
+                                    <a href="javascript:void(0);" slot="reference">json</a>
+                                    <!--<a href="javascript:void(0);" @click="toggle(param.name)">{{param.type}}</a>-->
+                                </el-popover>
+                            </template>
+                            <template v-else>{{param.type}}</template>
+                        </td>
+                        <td class="center">
+                            {{param.in}}
+                        </td>
+                        <td class="center">
+                            {{param.required}}
+                        </td>
+                    </tr>
+                </template>
+            </table>
+            <el-button style="margin-top: 12px" type="primary" @click="submit" :loading="loading"> Submit</el-button>
+        </div>
+    </div>
+    <div class="region-inner">
+        <div class="region-title"><label>Response</label></div>
+        <div class="region-content">
+            <div class="debug-response">
+                <pre class="code-json">{{response}}</pre>
+            </div>
+        </div>
+    </div>
+</div>

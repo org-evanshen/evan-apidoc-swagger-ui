@@ -1,0 +1,81 @@
+<div id="container">
+    <div id="container-banner">
+        <div class="banner-left">
+            <i></i>
+            <span>
+                Api Document
+            </span>
+        </div>
+        <div class="banner-right" v-if="false">
+            <template v-if="!userAgent">
+                <el-button type="text" @click="showLoginWin=true">Sign in</el-button>
+            </template>
+            <template v-else>
+                <el-button type="text">Welcome，{{ userInfoText }}</el-button>
+                &nbsp;
+                <template v-if="userAgent.userType == 2 || userAgent.userType == 3 || userAgent.userType == 6">
+                    <el-button type="text" @click="userSwitchUserType()">Switch to {{ switchUserTypeText() }}
+                    </el-button>
+                </template>
+                <el-button type="text" @click="showLoginWin=true">Change account</el-button>
+                <el-button type="text" @click="userLogout">Sign out</el-button>
+            </template>
+            |
+            <a href="/#/enums" target="_blank">Export Enums</a>
+            |
+            <a href="/#/functions" target="_blank">Function Ids</a>
+        </div>
+    </div>
+
+    <div id="container-sidebar">
+        <div id="menu_toggle" @click="leftFold()">
+            <i :class="{'el-icon-arrow-right':isCollapse,'el-icon-arrow-left':!isCollapse}"></i>
+        </div>
+        <!--模块-->
+        <el-menu
+            :default-active="activeIndex"
+            id="container_menu"
+            unique-opened
+            :collapse="isCollapse"
+        >
+            <el-submenu :index="mainMenu.id" v-for="(mainMenu,topIndex) in menus" :key="mainMenu.id">
+                <template slot="title">
+                    <i class="el-icon-menu"></i> <span>{{mainMenu.name}}</span>
+                </template>
+                <template v-for="(module,subIndex) in mainMenu.modules">
+                    <el-menu-item :index="mainMenu.id + '-' + module.name"
+                                  @click="selectModule(mainMenu.id,module.name)">
+                        <template slot="title">
+                            <span slot="reference">{{module.description}}</span>
+                        </template>
+                    </el-menu-item>
+                </template>
+            </el-submenu>
+        </el-menu>
+    </div>
+    <div id="container-content" :class="{'collapse':isCollapse}">
+        <router-view></router-view>
+    </div>
+    <!-- 修改用户信息弹框 -->
+    <el-dialog title="模拟登录" :visible.sync="showLoginWin" size="tiny" :close-on-click-modal="false"
+               :close-on-press-escape="false">
+        <el-form :model="loginUser" label-width="140px">
+            <el-col :span="18">
+                <el-form-item label="用户名：">
+                    <el-input v-model="loginUser.account"></el-input>
+                </el-form-item>
+            </el-col>
+            <el-col :span="18">
+                <el-form-item label="密码：">
+                    <el-input v-model="loginUser.pwd" type="password"></el-input>
+                </el-form-item>
+            </el-col>
+            <el-col style="padding-bottom: 30px">
+                <el-form-item>
+                    <el-button type="primary" @click="accountLogin()">确 定</el-button>
+                    <el-button @click="showLoginWin=false">取 消</el-button>
+                </el-form-item>
+            </el-col>
+        </el-form>
+    </el-dialog>
+</div>

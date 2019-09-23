@@ -43,6 +43,7 @@
                             _this.response.isRef = false;
                             _this.response.isArray = false;
                             _this.response.isMap = false;
+                            _this.response.isSimple = false;//基本类型
 
 
                             if (apiResponseData.$ref) { //单个对象
@@ -61,22 +62,21 @@
                                 _this.response.type = type;
                             } else if (apiResponseData.type && apiResponseData.type != 'object') { //基本类型
                                 //console.log(apiResponseData.type)
+                                _this.response.isSimple = true;
                                 _this.response.type = apiResponseData.type;
                             } else { //无返回
                                 _this.response.type = '无';
                             }
 
                             //console.log(_this.response.type);
-
                             let responseData = null;
-                            //console.log(_this.response.type);
 
                             if (_this.response.type != '无') {
-                                if (apiResponseData.type && apiResponseData.type != 'object') {//基本类型
+                                if (_this.response.isSimple) {//基本类型
                                     if('OK' != response.description) {
                                         responseData = response.description;
                                     }
-                                    // console.log(response);
+                                    console.log(response);
                                 } else {
                                     let responseDataTmp = {};
                                     ApiDataParse.getDefinition(_this.serviceId, _this.response.type, (obj) => {
@@ -94,10 +94,10 @@
                                     } else {
                                         responseData = responseDataTmp;
                                     }
+                                    //console.log("object", responseData);
                                 }
-                                //console.log(responseData);
                             }
-                            //console.log(responseData);
+
                             this.responseData = responseData;
                         });
                     }

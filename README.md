@@ -2,8 +2,6 @@
 
 基于官方SwaggerUI改写的Swagger界面
 
-> A Vue.js project
-
 ## Build Setup
 
 ``` bash

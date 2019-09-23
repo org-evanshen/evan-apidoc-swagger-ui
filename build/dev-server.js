@@ -23,13 +23,13 @@ var autoOpenBrowser = !!config.dev.autoOpenBrowser
 var proxyTable = config.dev.proxyTable
 
 var app = express()
-var appData = require('../test-data.json');
+// var appData = require('../test-data.json');
 var apiRoutes = express.Router()
 
 apiRoutes.get('/apidoc', function (req, res) {
     res.json({
         errno: 0,
-        data: appData
+        // data: appData
     });
 });
 

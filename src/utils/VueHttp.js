@@ -19,9 +19,9 @@ const VueHttp = {
                     } else if (res.data.success) {
                         resolve(res.data);
                     } else {
-                        if (!isHandleWarn) {
-                            this.warn(res.data);
-                        }
+                        // if (!isHandleWarn) {
+                        //     this.warn(res.data);
+                        // }
                         reject(res.data);
                     }
                 }).catch((error) => {
@@ -45,9 +45,9 @@ const VueHttp = {
                     } else if (res.data.success) {
                         resolve(res.data);
                     } else {
-                        if (!isHandleWarn) {
-                            this.warn(res.data);
-                        }
+                        // if (!isHandleWarn) {
+                        //     this.warn(res.data);
+                        // }
                         reject(res.data);
                     }
                 }).catch((error) => {

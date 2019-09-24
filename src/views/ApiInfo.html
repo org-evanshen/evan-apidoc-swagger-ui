@@ -13,7 +13,7 @@
                 <th width="15%">
                     Method：
                 </th>
-                <td >
+                <td>
                     {{currentApi.method}}
                 </td>
             </tr>
@@ -29,7 +29,7 @@
                 <th>
                     Description：
                 </th>
-                <td >
+                <td>
                     {{currentApi.description}}
                 </td>
             </tr>
@@ -101,57 +101,55 @@
                 </table>
             </div>
         </el-collapse-item>
-        <el-collapse-item title="Success Responses" name="Success">
-            <!--        <div class="region-title"><label>Success Responses</label></div>        -->
-            <div class="region-content code-box code-json">
-                {
-                <div style="padding-left:20px;">
-                    code："SUCCESS" <br/>
-                    msg："成功" <br/>
-                    <template v-if="response.isArray && response.page">
-                        page：//分页结果
-                        <pre>
-{
-    pageNo:"当前页码",
-    pageSize:"每页记录数",
-    pageCount:"共页数",
-    recordCount:"记录总数"
-}</pre>
-                    </template>
-                    <template v-if="responseData">
-                        data:
-                        <pre>
-{{responseData}}</pre>
-                    </template>
-                </div>
-                }
-            </div>
-        </el-collapse-item>
-        <el-collapse-item title="Warn Responses" name="Warn">
-            <!--        <div class="region-title"><label></label></div>-->
-
-            <div class="region-content code-box code-json">
-                {
-                <div style="padding-left:20px;">
-                    code："警告编号" <a href="javascript:void(0);" @click="loadResult">more...</a> <br/>
-                    msg："警告提示"
-                </div>
-                }
-            </div>
-        </el-collapse-item>
-        <el-collapse-item title="Error Responses" name="Error">
-<!--            <div class="region-title"><label> Error</label></div>-->
-            <div class="region-content code-box code-json">
-                {
-                <div style="padding-left:20px;">
-                    code："ERROR" <br/>
-                    msg："系统繁忙，请稍候再试！"
-                </div>
-                }
-            </div>
-        </el-collapse-item>
-
     </el-collapse>
+    <div class="region-inner">
+        <div class="region-title"><label>Success Responses</label></div>
+        <div class="region-content code-box code-json">
+            {
+            <div style="padding-left:20px;">
+                "code":"SUCCESS",<br/>
+                "msg":"成功",<br/>
+                <template v-if="response.isArray && response.page">
+                    page：//分页结果
+                    <pre>
+{
+    "pageNo":"当前页码",
+    "pageSize":"每页记录数",
+    "pageCount":"共页数",
+    "recordCount":"记录总数"
+}</pre>
+                </template>
+                <template v-if="responseData">
+                    "data":
+                    <pre>
+{{responseData}}</pre>
+                </template>
+            </div>
+            }
+        </div>
+    </div>
+    <div class="region-inner">
+        <div class="region-title"><label>Warn Responses</label></div>
+        <div class="region-content code-box code-json">
+            {
+            <div style="padding-left:20px;">
+                "code":"警告编号" <a href="javascript:void(0);" @click="loadResult">more...</a> <br/>
+                "msg":"警告提示"
+            </div>
+            }
+        </div>
+    </div>
+    <div class="region-inner">
+        <div class="region-title"><label>Error Responses</label></div>
+        <div class="region-content code-box code-json">
+            {
+            <div style="padding-left:20px;">
+                "code":"ERROR" <br/>
+                "msg":"系统繁忙，请稍候再试！"
+            </div>
+            }
+        </div>
+    </div>
     <el-dialog title="Api response code" :visible.sync="isShowApiResponseCode" :close-on-click-modal="false"
                :close-on-press-escape="false" width="60%">
         <table class="tb-list">

@@ -203,7 +203,7 @@ li {
     .container_apis_nav {
         //background: #fff;
         background: #f3f4f8;
-        border-right: 1px solid #eaeaea;
+        //border-right: 1px solid #eaeaea;
         //box-shadow: 0 0 1px rgba(0, 0, 0, .125), 0 1px 3px rgba(0, 0, 0, .2);
         //border-radius: 4px;
         width: 240px;
@@ -211,7 +211,7 @@ li {
         height: 100vh;
 
         h2 {
-            padding: 0 16px ;
+            padding: 0 16px;
             height: 50px;
             line-height: 50px;
             font-size: 16px;
@@ -221,11 +221,10 @@ li {
         }
         ul {
             overflow: auto;
-            height: calc(100% - 57px);
-            padding-bottom: 5px;
-            margin-bottom: 3px;
+            //height: calc(100% - 57px);
+            //padding-bottom: 5px;
+            //margin-bottom: 3px;
             list-style-position: inside;
-
             li {
                 padding: 10px 15px;
                 width: 100%;
@@ -248,7 +247,7 @@ li {
             li.active {
                 background: #fff;
                 //background: #f1f8ff;
-                border-right: solid 2px #409EFF;
+                //border-bottom: solid 1px #409EFF;
                 //padding-left: 13px;
             }
         }
@@ -371,15 +370,16 @@ li {
     margin-bottom: 20px;
     > .region-title {
         //border-bottom: solid 1px #ebeef5;
+        height: 36px;
+        line-height: 36px;
+
         label {
             font-size: 13px;
-            display: inline-block;
-            height: 30px;
-            line-height: 30px;
+            //display: inline-block;
             color: #303133;
             font-weight: 500;
-            //border-left: solid 3px #1d90e6;
-            //padding-left: 10px;
+            border-left: solid 2px #1d90e6;
+            padding-left: 8px;
         }
     }
     .region-subtitle {

@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import {MessageBox} from 'element-ui';
+import qs from 'qs';
 
 const VueHttp = {
 
@@ -32,13 +33,13 @@ const VueHttp = {
     /**
      * post 请求
      * @param url 请求地址
-     * @param config 请求参数 config 里面有 params 和 data 参数可选, 当请求参数格式类型为body时,应为data,其他则为 params
-     * @param isHandleWarn 是否需要处理警告 默认 false,当调用方传递时,表示不需要处理警告,调用方会自己处理
+     * @data
+     * @contentType
      * @returns {Promise<any>} 回调
      */
-    post(url, config, isHandleWarn) {
+    post(url, data, contentType, isHandleWarn) {
         return new Promise((resolve, reject) => {
-            Vue.axios.post(url, null, config)
+            Vue.axios.post(url, data,{headers: { 'content-type': contentType }})
                 .then((res) => {
                     if (res.data.success === undefined && res.status === 200) {
                         resolve(res);

@@ -4,6 +4,7 @@
     import Model from './Model.vue';
     import Constant from '@/constant/Constant';
     import {Message, MessageBox} from 'element-ui';
+    import qs from 'qs';
 
     export default {
         data() {
@@ -29,38 +30,39 @@
             },
             submit() {
                 var _this = this;
-                var params = {};
-
-                //console.log(params);
-                var body = null;
+                var contentType = 'application/x-www-form-urlencoded';
+                var data = {};
                 var path = {};
 
                 if(Array.isArray(this.currentApi.parameters)){
                     this.currentApi.parameters.forEach((parameter) => {
                         if (parameter.value) {
-                            //console.log(parameter.name);
+                            // console.log(parameter.value);
                             if (parameter.in == 'body') {
-                                body = parameter.value;
+                                data = parameter.value;
+                                contentType = 'application/json'
                             } else if (parameter.in == 'path') {
                                 path[parameter.name] = parameter.value;
                             } else {
-                                params[parameter.name] = parameter.value;
+                                data[parameter.name] = parameter.value;
                             }
                         }
                     });
                 }
 
-                var serviceUrl = Constant.REMOTE_URI[_this.serviceId].path + this.currentApi.path;
-
-                if(body){
+                if('application/json' == contentType){
                     try {
-                        body = JSON.parse(body);
+                        data = JSON.parse(data);
                     }catch(ex){
                         console.error(ex)
                         this.$alert('请求数据格式不正确，请提交json格式的数据！','提示',{type:'warning'});
                         return;
                     }
+                }else{
+                    data = qs.stringify(data);
                 }
+
+                var serviceUrl = Constant.REMOTE_URI[_this.serviceId].path + this.currentApi.path;
 
                 Loading.append(_this, 'loading');
                 _this.response = '请稍候...';
@@ -77,8 +79,7 @@
                 }
 
                 if (this.currentApi.method == 'post') {
-                    let config = {data: body, params: params};
-                    VueHttp.post(serviceUrl, config).then((res)=>{
+                    VueHttp.post(serviceUrl, data, contentType).then((res)=>{
                         handler(res);
                     }).catch((res)=>{
                         handler(res);

@@ -50,16 +50,18 @@
                     });
                 }
 
-                if('application/json' == contentType){
-                    try {
-                        data = JSON.parse(data);
-                    }catch(ex){
-                        console.error(ex)
-                        this.$alert('请求数据格式不正确，请提交json格式的数据！','提示',{type:'warning'});
-                        return;
+                if (this.currentApi.method == 'post') {
+                    if ('application/json' == contentType) {
+                        try {
+                            data = JSON.parse(data);
+                        } catch (ex) {
+                            console.error(ex)
+                            this.$alert('请求数据格式不正确，请提交json格式的数据！', '提示', {type: 'warning'});
+                            return;
+                        }
+                    } else {
+                        data = qs.stringify(data);
                     }
-                }else{
-                    data = qs.stringify(data);
                 }
 
                 var serviceUrl = Constant.REMOTE_URI[_this.serviceId].path + this.currentApi.path;
@@ -86,7 +88,7 @@
                     });
                 } else {
                     //console.log(params);
-                    VueHttp.get(serviceUrl, params).then((res) => {
+                    VueHttp.get(serviceUrl, data).then((res) => {
                         handler(res);
                     }).catch((res) => {
                         handler(res);

@@ -15,9 +15,9 @@ const VueHttp = {
         return new Promise((resolve, reject) => {
             Vue.axios.get(url, {params})
                 .then((res) => {
-                    if (res.data.success === undefined && res.status === 200) {
+                    if (res.data.code == undefined || res.data.code =='ERROR' ) {
                         resolve(res);
-                    } else if (res.data.success) {
+                    } else if (res.data.code == 'SUCCESS') {
                         resolve(res.data);
                     } else {
                         // if (!isHandleWarn) {
@@ -41,9 +41,9 @@ const VueHttp = {
         return new Promise((resolve, reject) => {
             Vue.axios.post(url, data,{headers: { 'content-type': contentType }})
                 .then((res) => {
-                    if (res.data.success === undefined && res.status === 200) {
+                    if (res.data.code == undefined || res.data.code =='ERROR' ) {
                         resolve(res);
-                    } else if (res.data.success) {
+                    } else if (res.data.code == 'SUCCESS') {
                         resolve(res.data);
                     } else {
                         // if (!isHandleWarn) {

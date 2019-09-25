@@ -15,16 +15,9 @@
                 </th>
                 <td>
                     {{currentApi.method}}
+                    <!--{{currentApi.consumes}}-->
                 </td>
             </tr>
-            <!--<tr>-->
-            <!--<th >-->
-            <!--Request accepts：-->
-            <!--</th>-->
-            <!--<td colspan="3">-->
-            <!--{{currentApi.consumes}}-->
-            <!--</td>-->
-            <!--</tr>-->
             <tr>
                 <th>
                     Description：
@@ -35,10 +28,6 @@
             </tr>
         </table>
     </div>
-    <!--        <div class="region-inner">-->
-    <!--            <div class="region-title" v-if="false"><label>Base info</label></div>-->
-    <!--        </div>-->
-
     <el-collapse v-model="actives">
         <el-collapse-item title="Parameters" name="Parameters">
             <!--<div class="region-title"><label>Parameters</label></div>-->

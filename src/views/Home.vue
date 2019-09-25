@@ -34,6 +34,7 @@
             }
 
             _this.menus = _menus;
+            // console.log(_menus)
             var serviceId = _this.$route.params.serviceId;
             var moduleName = this.$route.params.moduleName;
 

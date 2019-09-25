@@ -29,11 +29,11 @@
     export default {
         data() {
             return {
-                url: Constant.REMOTE_URI.userService.path + "functions/apidoc",
-                activeTab:'平台用户',
-                apidocMap:[],
-                cachedFunctionMap:[],
-                functions:[],
+                // url: Constant.REMOTE_URI.userService.path + "functions/apidoc",
+                // activeTab:'平台用户',
+                // apidocMap:[],
+                // cachedFunctionMap:[],
+                // functions:[],
             };
         },
         components:{

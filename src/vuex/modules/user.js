@@ -1,7 +1,7 @@
 import Constant from '@/constant/Constant'
 
-const url = Constant.REMOTE_URI.userService.path;
-const ZUUL_URL = Constant.REMOTE_URI.zuulService.path;
+const url = Constant.REMOTE_URI.zuul.path;
+const ZUUL_URL = Constant.REMOTE_URI.zuul.path;
 
 const state = {
     userAgent: {},
@@ -100,25 +100,6 @@ const actions = {
                     return null;
                 })
         })
-    },
-    /**
-     * 切换用户
-     * @param commit
-     * @param userType
-     */
-    switchUserType: function ({commit},userType) {
-        return new Promise((resolve, reject)=>{
-            VueHttp.post(url + 'switch-user-type?userType=' + userType, {})
-                .then((res) => {
-                    UserAgent.save(res.data, commit);
-                    commit('cacheUserType', res.data.userType);
-                    resolve(res);
-                    return res.data;
-                }).catch((err)=> {
-                    reject(err);
-                    return null;
-                })
-        });
     },
     /**
      * 退出

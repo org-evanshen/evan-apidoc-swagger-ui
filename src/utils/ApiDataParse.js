@@ -5,10 +5,10 @@ const ApiDataParse = {
     parseApiDocData(serviceId) {
         var service = Constant.REMOTE_URI[serviceId];
         service.id = serviceId;
-        //console.log(service);
         var url = service.path + 'v2/api-docs'
         //var url = '/local-data/apidoc'
         return new Promise((resolve, reject) => {
+            console.log(url);
             VueHttp.get(url)
                 .then((res) => {
                     var data = res.data;

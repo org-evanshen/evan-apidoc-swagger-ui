@@ -61,19 +61,27 @@ module.exports = {
             //         '^/api/zuul': '',
             //     },
             // },
-            '/api/base': {
+            // '/api/base': {
+            //     target: server + ':8031',
+            //     changeOrigin: true,
+            //     pathRewrite: {
+            //         '^/api/base': '',
+            //     },
+            // },
+            //
+            // '/api/user': {
+            //     target: server + ':8061',
+            //     changeOrigin: true,
+            //     pathRewrite: {
+            //         '^/api/user': '',
+            //     },
+            // },
+
+            '/api/tianyandata-merchant': {
                 target: server + ':8031',
                 changeOrigin: true,
                 pathRewrite: {
-                    '^/api/base': '',
-                },
-            },
-
-            '/api/user': {
-                target: server + ':8061',
-                changeOrigin: true,
-                pathRewrite: {
-                    '^/api/user': '',
+                    '^/api/tianyandata-merchant': '',
                 },
             },
         },

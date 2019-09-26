@@ -7,7 +7,7 @@
 ``` bash
 
 #npm install -g cnpm --registry=https://registry.npm.taobao.org
-#npm install --save mizhi-core --registry=http://120.27.218.59:8081/repository/npm-group/
+#npm install --save mizhi-ui-core --registry=http://120.27.218.59:8081/repository/npm-group/
 
 npm config set registry=http://120.27.218.59:8081/repository/npm-group/
 
@@ -18,7 +18,7 @@ npm install
 npm run dev
 
 # build for production with minification
-npm run build
+npm run release
 
 # build for production and view the bundle analyzer report
 npm run build --report

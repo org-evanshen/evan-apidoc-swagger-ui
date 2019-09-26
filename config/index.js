@@ -77,11 +77,11 @@ module.exports = {
             //     },
             // },
 
-            '/api/tianyandata-merchant': {
+            '/api/merchant': {
                 target: server + ':8031',
                 changeOrigin: true,
                 pathRewrite: {
-                    '^/api/tianyandata-merchant': '',
+                    '^/api/merchant': '',
                 },
             },
         },

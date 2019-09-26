@@ -1,6 +1,6 @@
 const Constant = {
     REMOTE_URI: {
-        merchant:{name: '商户服务', path: '/api/tianyandata-merchant/'},
+        merchant:{name: '商户服务', path: '/api/merchant/'},
         zuul: {name: '网关', path: '/api/'},
         // baseService: {name: '基础服务', path: '/api/base/'},
         // userService: {name: '用户服务', path: '/api/user/'},

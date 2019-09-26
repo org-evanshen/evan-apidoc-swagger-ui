@@ -1,4 +1,4 @@
 module.exports = {
-    NODE_ENV: '"production"',
-    PORTAL_HOST: 'http://101.37.151.117:8011',
+    NODE_ENV: '"release"',
+    // PORTAL_HOST: 'http://101.37.151.117:8011',
 }

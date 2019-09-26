@@ -29,10 +29,10 @@ const mutations = {
     },
     saveUserAgent(state, userAgent) {
         //加密
-        let userAgentStoreOnCahe = Base64.encode(DigestUtils.sha256(userAgent.token + new Date().getTime()) + JSON.stringify(userAgent));
-        //存储
-        window.localStorage.setItem('userAgent', userAgentStoreOnCahe);
-        state.userAgent = userAgent;
+        // let userAgentStoreOnCahe = Base64.encode(DigestUtils.sha256(userAgent.token + new Date().getTime()) + JSON.stringify(userAgent));
+        // //存储
+        // window.localStorage.setItem('userAgent', userAgentStoreOnCahe);
+        // state.userAgent = userAgent;
     },
     removeUserAgent(state) {
         state.userAgent = {}
@@ -71,7 +71,7 @@ const actions = {
             validateCodeSMS: validateCodeSMS,
             csrfToken: csrfToken
         };
-        login.sign = DigestUtils.sha256(account + random + DigestUtils.sha256(pwd));
+        // login.sign = DigestUtils.sha256(account + random + DigestUtils.sha256(pwd));
         return VueHttp.post(url + 'login', {data: login})
             .then((res) => {
                 UserAgent.save(res.data, commit);

@@ -8,7 +8,7 @@ cd $WORK_DIR
 rm -rf node_modules
 rm -rf /tmp/chromedriver/
 
-npm install --save mizhi-ui-core --registry=http://120.27.218.59:8081/repository/npm-group/
+#npm install --save mizhi-ui-core --registry=http://120.27.218.59:8081/repository/npm-group/
 
 cnpm install
 

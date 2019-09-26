@@ -121,11 +121,11 @@ function token(request) {
 
     let random = new Date().getTime();
 
-    let sign = Btbs.generateSign(request.params, random, secret);
-
-    request.headers.token = token;
-    request.headers.sign = sign;
-    request.headers.random = random;
+    // let sign = Btbs.generateSign(request.params, random, secret);
+    //
+    // request.headers.token = token;
+    // request.headers.sign = sign;
+    // request.headers.random = random;
 }
 
 function inExcludes(url, excludes) {

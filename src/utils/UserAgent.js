@@ -43,7 +43,7 @@ const UserAgent = {
     },
     remove: function () {
         top.userAgent = null; //必须清除缓存
-        Core.CookieUtil.remove('agent');
+        // Core.CookieUtil.remove('agent');
         window.localStorage.removeItem('userAgent');
     },
     update: function (userAgentUpdate, store) {

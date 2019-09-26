@@ -1,12 +1,8 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
 var path = require('path');
 
-// var server = "http://116.62.114.198";
-// var server = "http://192.168.18.161";
-// var server = "http://101.37.151.117";
-// var server = "http://47.110.67.67";
-// var server = "http://192.168.18.133";
-var server = "http://127.0.0.1";
+var server = "http://101.37.70.249";
+//var server = "http://127.0.0.1";
 
 module.exports = {
     build: {
@@ -76,7 +72,6 @@ module.exports = {
             //         '^/api/user': '',
             //     },
             // },
-
             '/api/merchant': {
                 target: server + ':8031',
                 changeOrigin: true,

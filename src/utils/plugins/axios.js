@@ -110,20 +110,21 @@ function token(request) {
     let userAgent = UserAgent.get();
 
     let token, secret;
-    if (userAgent && !inExcludes(request.url, excludes)) {
-        token = userAgent.token;
-        secret = userAgent.tokenSecret;
-    }
-    else {
-        token = Constant.DEFAULT_API_TOKEN; //固定，与服务端约定
-        secret = Constant.DEFAULT_API_SECRET;//固定，与服务端约定
-    }
+    token = Constant.DEFAULT_API_TOKEN; //固定，与服务端约定
+    // if (userAgent && !inExcludes(request.url, excludes)) {
+    //     token = userAgent.token;
+    //     secret = userAgent.tokenSecret;
+    // }
+    // else {
+    //     token = Constant.DEFAULT_API_TOKEN; //固定，与服务端约定
+    //     secret = Constant.DEFAULT_API_SECRET;//固定，与服务端约定
+    // }
 
     let random = new Date().getTime();
 
     // let sign = Btbs.generateSign(request.params, random, secret);
     //
-    // request.headers.token = token;
+    request.headers.token = token;
     // request.headers.sign = sign;
     // request.headers.random = random;
 }

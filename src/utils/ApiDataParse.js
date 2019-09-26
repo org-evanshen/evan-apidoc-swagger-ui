@@ -118,6 +118,7 @@ const ApiDataParse = {
 
                 //console.log(api.parameters);
                 if (api.parameters) {
+                    let parameters = [];
                     api.parameters.forEach((parameter, i) => {
                         if (parameter.in == 'body') {
                             //console.log(parameter.schema.$ref);
@@ -127,11 +128,20 @@ const ApiDataParse = {
                         } else if (parameter.enum) {
                             parameter.description += ', 可选值[' + parameter.enum + ']';
                         }
-                        //console.log(parameter);
-                        if (parameter.name == 'columns' || parameter.name == 'sortCode' || parameter.name == 'sortByDefault' || parameter.name == 'includeDeleted') {
-                            api.parameters.splice(i, 1);
+                        //console.log(parameter.name);
+                        if (!(
+                            parameter.name == 'columns'
+                            || parameter.name == 'sortCode'
+                            || parameter.name == 'sortByDefault'
+                            || parameter.name == 'includeDeleted'
+                            || parameter.name == 'startRow'
+                            || parameter.name == 'endRow'
+                        )
+                        ) {
+                            parameters.push(parameter);
                         }
                     });
+                    api.parameters = parameters;
                 }
 
                 apis[api.id] = api;

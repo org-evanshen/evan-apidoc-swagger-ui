@@ -5,11 +5,14 @@
 ## Build Setup
 
 ``` bash
-# use taobao Mirror
-npm install -g cnpm --registry=https://registry.npm.taobao.org
+
+#npm install -g cnpm --registry=https://registry.npm.taobao.org
+#npm install --save mizhi-core --registry=http://120.27.218.59:8081/repository/npm-group/
+
+npm config set registry=http://120.27.218.59:8081/repository/npm-group/
 
 # install dependencies
-cnpm install
+npm install
 
 # serve with hot reload at localhost:8080
 npm run dev

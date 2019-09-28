@@ -1,8 +1,8 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
 var path = require('path');
 
-var server = "http://101.37.70.249";
-//var server = "http://127.0.0.1";
+//var server = "http://101.37.70.249";
+var server = "http://127.0.0.1";
 
 module.exports = {
     build: {

@@ -40,8 +40,11 @@
 
             _this.activeIndex = serviceId + '-' + moduleName;
 
-            this.loadCsrfToken();
-            this.userInfo();
+            // this.loadCsrfToken();
+            // this.userInfo();
+
+            // let host=location.host;
+            // console.log(host);
         },
         computed:{
             ...mapGetters({

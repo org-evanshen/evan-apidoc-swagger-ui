@@ -8,7 +8,7 @@ cd $WORK_DIR
 rm -rf node_modules
 rm -rf /tmp/chromedriver/
 
-npm install
+cnpm install
 
 npm run release
 

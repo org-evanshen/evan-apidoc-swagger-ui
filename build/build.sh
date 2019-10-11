@@ -12,9 +12,9 @@ cnpm install
 
 npm run release
 
-rm -rf apidoc
-mkdir apidoc
+rm -rf tianyandata-apidoc
+mkdir tianyandata-apidoc
 
-cp -rf dist/* apidoc
+cp -rf dist/* tianyandata-apidoc
 
-tar -czvf dist/tianyandata-apidoc.tar.gz ./apidoc
+tar -czvf dist/tianyandata-apidoc.tar.gz ./tianyandata-apidoc

@@ -1,7 +1,6 @@
 import Constant from '@/constant/Constant'
 
-const url = Constant.REMOTE_URI.zuul.path;
-const ZUUL_URL = Constant.REMOTE_URI.zuul.path;
+const url = Constant.REMOTE_URI.merchant.path;
 
 const state = {
     userAgent: {},
@@ -46,7 +45,7 @@ const actions = {
      * @param commit
      */
     csrfToken({commit}) {
-        return VueHttp.get(ZUUL_URL + 'csrf/token')
+        return VueHttp.get(url + 'csrf/token')
             .then((res) => {
                 return res.data;
             })

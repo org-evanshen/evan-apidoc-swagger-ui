@@ -18,17 +18,17 @@
                 notLogin: true,
                 moduleTitle: '',
                 loginUser: {},
-                csrfToken:''
+                csrfToken: ''
             };
         },
-        created: function () {
+        created: async function () {
             var _this = this;
             var _menus = [];
 
             for (var serviceId in Constant.REMOTE_URI) {
-                ApiDataParse.parseApiDocData(serviceId).then((res) => {
+                await ApiDataParse.parseApiDocData(serviceId).then((res) => {
                     _menus.push({'id': res.service.id, 'name': res.service.name, 'modules': res.data.tags});
-                }).catch((service)=>{
+                }).catch((service) => {
                     _menus.push({'id': service.id, 'name': service.name});
                 });
             }
@@ -46,11 +46,11 @@
             // let host=location.host;
             // console.log(host);
         },
-        computed:{
+        computed: {
             ...mapGetters({
                 userAgent: 'userAgent',
             }),
-            userInfoText(){
+            userInfoText() {
                 let userAgent = this.userAgent;
                 let username = userAgent.userName ? userAgent.userName : userAgent.account;
                 return username + '-' + userAgent.orgNamePath + ' [' + UserTypeEnum.get(userAgent.userType).text + ']';
@@ -88,7 +88,7 @@
             setModuleTitle(title) {
                 this.moduleTitle = title;
             },
-            switchUserTypeText(){
+            switchUserTypeText() {
                 let userAgent = this.userAgent;
                 return userAgent.userType == UserTypeEnum.CUSTOM.code || userAgent.userType == UserTypeEnum.CLIENTS.code ? '供方' : '需方';
             },
@@ -106,7 +106,7 @@
                     pwd: this.loginUser.pwd,
                     csrfToken: this.csrfToken
                 });
-                if(user){
+                if (user) {
                     let _this = this;
                     this.$message({
                         message: '登录成功！', type: 'success',
@@ -123,11 +123,11 @@
             },
             userSwitchUserType() {
                 let userType = UserTypeEnum.SUPPLIER.code;
-                if(this.userAgent.userType == UserTypeEnum.SUPPLIER.code){
+                if (this.userAgent.userType == UserTypeEnum.SUPPLIER.code) {
                     userType = UserTypeEnum.CUSTOM.code;
                 }
                 let userAgent = this.switchUserType(userType);
-                if(userAgent){
+                if (userAgent) {
                     this.$message({message: '切换成功！', type: 'success'})
                 }
             },
@@ -138,7 +138,7 @@
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                     _this.logout();
+                    _this.logout();
                     this.$message({message: '退出成功！', type: 'success'})
                 });
             }

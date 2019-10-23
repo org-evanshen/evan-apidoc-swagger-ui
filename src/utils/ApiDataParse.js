@@ -36,7 +36,7 @@ const ApiDataParse = {
                     resolve({data, service});
 
                 }).catch((error => {
-                reject(service)
+                    reject(service)
             }))
         })
     },

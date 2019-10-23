@@ -2,7 +2,7 @@
 var path = require('path');
 
 var server = "http://121.40.236.55";
-//var server = "http://127.0.0.1";
+// var server = "http://127.0.0.1";
 
 module.exports = {
     build: {

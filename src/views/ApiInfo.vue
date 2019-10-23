@@ -32,13 +32,14 @@
                 // console.log(response)
                 if (response.schema) {
                     if (response.schema.$ref) {
+                        //console.log('response.schema.$ref',response.schema.$ref)
                         var key = ApiDataParse.getDefinitionType(response.schema.$ref);
                         ApiDataParse.getDefinition(_this.serviceId, key, (_apiResponse) => {
-                            //console.log(_apiResponse);
+                            //console.log('_apiResponse',_apiResponse);
                             var apiResponse = _apiResponse.properties;
                             var apiResponseData = apiResponse.data;
 
-                            //console.log(apiResponseData);
+                            //console.log('apiResponse',apiResponse);
 
                             _this.response.isRef = false;
                             _this.response.isArray = false;
@@ -76,7 +77,7 @@
                                     if('OK' != response.description) {
                                         responseData = response.description;
                                     }
-                                    console.log(response);
+                                    //console.log(response);
                                 } else {
                                     let responseDataTmp = {};
                                     ApiDataParse.getDefinition(_this.serviceId, _this.response.type, (obj) => {
@@ -84,7 +85,13 @@
                                         if (obj.properties) {
                                             let properties = obj.properties;
                                             for (var p in properties) {
-                                                responseDataTmp[p] = properties[p].description;
+                                                let property = properties[p];
+                                                // console.log("property", property);
+                                                if (property.$ref) {
+                                                    getRes(property, responseDataTmp)
+                                                } else {
+                                                    responseDataTmp[p] = property.description;
+                                                }
                                             }
                                         }
                                     });
@@ -99,6 +106,27 @@
                             }
 
                             this.responseData = responseData;
+
+                            function getRes(property, responseDataTmp) {
+                                let propertyName = property.name;
+
+                                var typeInner = ApiDataParse.getDefinitionType(property.$ref);
+                                let responseDataTmp2 = {};
+                                ApiDataParse.getDefinition(_this.serviceId, typeInner, (objInner) => {
+                                    if (objInner.properties) {
+                                        let propertiesInner = objInner.properties;
+                                        for (var p in propertiesInner) {
+                                            let property2 = propertiesInner[p];
+                                            if (property2.$ref) {
+                                                getRes(property, responseDataTmp2)
+                                            }else{
+                                                responseDataTmp2[p] = property2.description;
+                                            }
+                                        }
+                                    }
+                                });
+                                responseDataTmp[propertyName] = responseDataTmp2;
+                            }
                         });
                     }
                 }

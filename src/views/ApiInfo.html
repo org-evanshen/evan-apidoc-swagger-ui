@@ -96,20 +96,20 @@
             <div style="padding-left:20px;">
                 "code":"SUCCESS",<br/>
                 "msg":"成功",<br/>
-                <template v-if="response.isArray && response.page">
-                    page：//分页结果
+                <template v-if="responseData">
+                    "data":
                     <pre>
+{{responseData}}</pre>
+                    <template v-if="response.isArray && response.page">
+                        "page"：//如是分页，分页结果格式：
+                        <pre>
 {
     "pageNo":"当前页码",
     "pageSize":"每页记录数",
     "pageCount":"共页数",
     "recordCount":"记录总数"
 }</pre>
-                </template>
-                <template v-if="responseData">
-                    "data":
-                    <pre>
-{{responseData}}</pre>
+                    </template>
                 </template>
             </div>
             }

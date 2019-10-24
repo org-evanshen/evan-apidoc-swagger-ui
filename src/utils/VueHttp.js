@@ -24,7 +24,8 @@ const VueHttp = {
                     }else if(res.data.code == 'SUCCESS'){
                         resolve(res.data);
                     }else if (res.data.code =='ERROR' ) {
-                        this.catch(res);
+                        this.$alert({message: res.data.msg, type: 'error'})
+                        console.error(res);
                     } else {
                         if (isWarn) {
                             this.warn(res);
@@ -33,7 +34,8 @@ const VueHttp = {
                         }
                     }
                 }).catch((error) => {
-                    this.catch(error);
+                    this.$alert({message: '系统错误', type: 'error'})
+                    console.error(error);
                 });
         })
     },

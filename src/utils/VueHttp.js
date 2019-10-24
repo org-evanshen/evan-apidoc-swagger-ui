@@ -11,19 +11,26 @@ const VueHttp = {
      * @param isHandleWarn 是否需要处理警告 默认 false,当调用方传递时,表示不需要处理警告,调用方会自己处理
      * @returns {Promise<any>} 回调
      */
-    get(url, params, isHandleWarn) {
+    get(url, params, isWarn) {
+        if(isWarn == null && isWarn == undefined){
+            isWarn = true;
+        }
+
         return new Promise((resolve, reject) => {
             Vue.axios.get(url, {params})
                 .then((res) => {
-                    if (res.data.code == undefined || res.data.code =='ERROR' ) {
+                    if(res.data.code == undefined) {
                         resolve(res);
-                    } else if (res.data.code == 'SUCCESS') {
+                    }else if(res.data.code == 'SUCCESS'){
                         resolve(res.data);
+                    }else if (res.data.code =='ERROR' ) {
+                        this.catch(res);
                     } else {
-                        // if (!isHandleWarn) {
-                        //     this.warn(res.data);
-                        // }
-                        reject(res.data);
+                        if (isWarn) {
+                            this.warn(res);
+                        }else{
+                            resolve(res.data);
+                        }
                     }
                 }).catch((error) => {
                     this.catch(error);
@@ -37,19 +44,28 @@ const VueHttp = {
      * @contentType
      * @returns {Promise<any>} 回调
      */
-    post(url, data, contentType, isHandleWarn) {
+    post(url, data, contentType , isWarn) {
+        if(!contentType){
+            contentType = 'application/x-www-form-urlencoded';
+        }
+
+        if(isWarn == null && isWarn == undefined){
+            isWarn = true;
+        }
+
         return new Promise((resolve, reject) => {
             Vue.axios.post(url, data,{headers: { 'content-type': contentType }})
                 .then((res) => {
                     if (res.data.code == undefined || res.data.code =='ERROR' ) {
-                        resolve(res);
+                        this.catch(res);
                     } else if (res.data.code == 'SUCCESS') {
                         resolve(res.data);
                     } else {
-                        // if (!isHandleWarn) {
-                        //     this.warn(res.data);
-                        // }
-                        reject(res.data);
+                        if (isWarn) {
+                            this.warn(res);
+                        }else{
+                            resolve(res.data);
+                        }
                     }
                 }).catch((error) => {
                     this.catch(error);
@@ -62,26 +78,24 @@ const VueHttp = {
      */
     warn(res) {
         MessageBox({
-            message: res.msg,
-            title: '错误提示',
+            message: res.data.msg,
+            title: '提示',
             type: 'warning'
         });
-        //提示
-        console.warn('>>>>>>>> warn >>>>>>>>>>')
+        // console.warn(res);
     },
     /**
      * 异常处理
      * @param error 异常信息
      */
     catch(error) {
-        // MessageBox({
-        //     message: '系统维护中',
-        //     title: '系统维护',
-        //     type: 'error'
-        // });
-        //提示系统维护中
-        console.error(error)
-    },
+        MessageBox({
+            message: '系统出错',
+            title: '提示',
+            type: 'error'
+        });
+        console.error(error);
+    }
 };
 
 module.exports = VueHttp;

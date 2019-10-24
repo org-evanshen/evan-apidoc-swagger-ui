@@ -1,9 +1,12 @@
 <template src="./Home.html"></template>
 
 <script>
-    import {mapActions, mapState, mapGetters, mapMutations} from "vuex";
     import Constant from '@/constant/Constant';
-    import UserTypeEnum from "@/constant/enums/UserTypeEnum"
+    import qs from 'qs';
+    import md5 from 'blueimp-md5'
+    import {sha256} from 'js-sha256'
+    import {MessageBox} from 'element-ui';
+    import VueCookies from 'vue-cookies'
 
     export default {
         data() {
@@ -17,8 +20,9 @@
                 showLoginWin: false,
                 notLogin: true,
                 moduleTitle: '',
+                islogin: false,
                 loginUser: {},
-                csrfToken: ''
+                loginUserForm: {},
             };
         },
         created: async function () {
@@ -38,38 +42,28 @@
             var serviceId = _this.$route.params.serviceId;
             var moduleName = this.$route.params.moduleName;
 
-            _this.activeIndex = serviceId + '-' + moduleName;
+            _this.activeIndex = serviceId + '-' + moduleName
 
-            // this.loadCsrfToken();
-            // this.userInfo();
+            _this.loginUser = LoginUser.get();
+            _this.islogin = _this.loginUser != undefined;
 
-            // let host=location.host;
-            // console.log(host);
+            let cookieAccount = VueCookies.get('account')
+            // console.log('cookieAccount',cookieAccount)
+            if (cookieAccount) {
+                this.loginUserForm.account = cookieAccount;
+            }
         },
         computed: {
-            ...mapGetters({
-                userAgent: 'userAgent',
-            }),
             userInfoText() {
-                let userAgent = this.userAgent;
-                let username = userAgent.userName ? userAgent.userName : userAgent.account;
-                return username + '-' + userAgent.orgNamePath + ' [' + UserTypeEnum.get(userAgent.userType).text + ']';
+                let loginUser = this.loginUser;
+                let loginUserText = null;
+                if (loginUser) {
+                    loginUserText = loginUser.orgName + '  [' + loginUser.account + ']';
+                }
+                return loginUserText;
             }
         },
         methods: {
-            ...mapActions({
-                getCsrfToken: 'csrfToken',
-                login: "login",
-                userInfo: 'userInfo',
-                switchUserType: 'switchUserType',
-                logout: 'logout'
-            }),
-            loadCsrfToken() {
-                let _this = this;
-                this.getCsrfToken().then((res) => {
-                    _this.csrfToken = res;
-                });
-            },
             /**
              * 折叠和展开
              */
@@ -88,58 +82,55 @@
             setModuleTitle(title) {
                 this.moduleTitle = title;
             },
-            switchUserTypeText() {
-                let userAgent = this.userAgent;
-                return userAgent.userType == UserTypeEnum.CUSTOM.code || userAgent.userType == UserTypeEnum.CLIENTS.code ? '供方' : '需方';
-            },
-            async accountLogin() {
-                if (!this.loginUser.account) {
+            login() {
+                if (!this.loginUserForm.account) {
                     this.$alert({message: '请输入用户名', type: 'warning'})
                     return;
                 }
-                if (!this.loginUser.pwd) {
+                if (!this.loginUserForm.pwd) {
                     this.$alert({message: '请输入密码', type: 'warning'})
                     return;
                 }
-                let user = await this.login({
-                    account: this.loginUser.account,
-                    pwd: this.loginUser.pwd,
-                    csrfToken: this.csrfToken
-                });
-                if (user) {
+
+                let loginApiUrl = '/api/merchant/account/login';
+
+                let pwdMd5 = md5(this.loginUserForm.pwd)
+                let random = new Date().getTime()
+                let sign = sha256(this.loginUserForm.account + random + pwdMd5)
+
+                let loginUserDTO = {
+                    account: this.loginUserForm.account,
+                    random: random,
+                    sign: sign
+                }
+
+                loginUserDTO = qs.stringify(loginUserDTO);
+
+                VueHttp.post(loginApiUrl, loginUserDTO, null, true).then((responseBody) => {
                     let _this = this;
+                    // console.log(responseBody);
+                    LoginUser.save(responseBody.data);
+                    VueCookies.set('account', responseBody.data.account);
                     this.$message({
-                        message: '登录成功！', type: 'success',
+                        message: '登录成功！', type: 'success', duration: 1000,
                         onClose: function () {
                             _this.showLoginWin = false;
-                            _this.loginUser = {};
+                            _this.loginUser = responseBody.data;
+                            _this.islogin = true
                         }
                     })
-                    let userAgent = await this.userInfo();
-                    if (userAgent.userType == UserTypeEnum.CLIENTS.code) {
-                        this.switchUserType();
-                    }
-                }
+                });
             },
-            userSwitchUserType() {
-                let userType = UserTypeEnum.SUPPLIER.code;
-                if (this.userAgent.userType == UserTypeEnum.SUPPLIER.code) {
-                    userType = UserTypeEnum.CUSTOM.code;
-                }
-                let userAgent = this.switchUserType(userType);
-                if (userAgent) {
-                    this.$message({message: '切换成功！', type: 'success'})
-                }
-            },
-            async userLogout() {
+            logout() {
                 let _this = this;
                 this.$confirm('是否要退出?', "退出", {
                     confirmButtonText: '确定',
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                    _this.logout();
-                    this.$message({message: '退出成功！', type: 'success'})
+                    LoginUser.remove();
+                    this.islogin = false;
+                    this.$message({message: '退出成功！', type: 'success', duration: 1000})
                 });
             }
         },

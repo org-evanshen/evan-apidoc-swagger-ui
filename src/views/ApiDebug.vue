@@ -30,7 +30,7 @@
             },
             submit() {
                 var _this = this;
-                var contentType = 'application/x-www-form-urlencoded';
+                var contentType;
                 var data = {};
                 var path = {};
 
@@ -81,16 +81,12 @@
                 }
 
                 if (this.currentApi.method == 'post') {
-                    VueHttp.post(serviceUrl, data, contentType).then((res)=>{
-                        handler(res);
-                    }).catch((res)=>{
+                    VueHttp.post(serviceUrl, data, contentType, false).then((res)=>{
                         handler(res);
                     });
                 } else {
                     //console.log(params);
-                    VueHttp.get(serviceUrl, data).then((res) => {
-                        handler(res);
-                    }).catch((res) => {
+                    VueHttp.get(serviceUrl, data, false).then((res) => {
                         handler(res);
                     });
                 }

@@ -47,7 +47,7 @@ module.exports = {
             VueHttp: '@/utils/VueHttp.js',
             ApiDataParse: '@/utils/ApiDataParse.js',
             Loading: '@/utils/Loading.js',
-            UserAgent:'@/utils/UserAgent',
+            LoginUser:'@/utils/LoginUser',
         })
     ],
     module: {

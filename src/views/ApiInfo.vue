@@ -12,9 +12,11 @@
                 responseData: ' ',
                 isShowApiResponseCode: false,
                 actives: ['Parameters', 'Responses'],
+                host:''
             };
         },
         created: function () {
+            this.host =  window.location.protocol + '//' + location.hostname
             this.parseResponse();
         },
         components: {

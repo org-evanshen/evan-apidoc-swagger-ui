@@ -71,6 +71,13 @@ module.exports = {
                     '^/api/stat': '',
                 },
             },
+            '/api/system': {
+                target: server + ':8041',
+                changeOrigin: true,
+                pathRewrite: {
+                    '^/api/stat': '',
+                },
+            },
         },
         // CSS Sourcemaps off by default because relative paths are "buggy"
         // with this option, according to the CSS-Loader README

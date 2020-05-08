@@ -56,7 +56,9 @@
                                 // console.log("单个对象" + type)
                             } else if (apiResponseData.type == 'array') {//集合
                                 _this.response.isArray = true;
+                                //console.log("apiResponseData.items.$ref", apiResponseData.items.$ref)
                                 var type = ApiDataParse.getDefinitionType(apiResponseData.items.$ref);
+                                //console.log("apiResponseData.items.type", type)
                                 _this.response.type = type;
                                 _this.response.page = {};
                             } else if (apiResponseData.additionalProperties && apiResponseData.additionalProperties.$ref) { //map
@@ -79,18 +81,23 @@
                                     if('OK' != response.description) {
                                         responseData = response.description;
                                     }
-                                    //console.log(response);
+                                    // console.log(response);
                                 } else {
+                                    // console.log(_this.serviceId);
+                                    // console.log('_this.response.type',_this.response.type);
                                     let responseDataTmp = {};
                                     ApiDataParse.getDefinition(_this.serviceId, _this.response.type, (obj) => {
-                                        //console.log(obj);
+                                        // console.log(obj);
                                         if (obj.properties) {
                                             let properties = obj.properties;
                                             for (var p in properties) {
                                                 let property = properties[p];
                                                 // console.log("property", property);
                                                 if (property.$ref) {
-                                                    getRes(property, responseDataTmp)
+                                                    var type = ApiDataParse.getDefinitionType(property.$ref);
+                                                    if(type != _this.response.type) {
+                                                        getRes(property, responseDataTmp)
+                                                    }
                                                 } else {
                                                     responseDataTmp[p] = property.description;
                                                 }
@@ -103,7 +110,7 @@
                                     } else {
                                         responseData = responseDataTmp;
                                     }
-                                    //console.log("object", responseData);
+                                    // console.log("responseData", responseData);
                                 }
                             }
 
@@ -120,7 +127,10 @@
                                         for (var p in propertiesInner) {
                                             let property2 = propertiesInner[p];
                                             if (property2.$ref) {
-                                                getRes(property, responseDataTmp2)
+                                                // console.log("property2.$ref", property2.$ref);
+                                                if(property.$ref != property2.$ref){
+                                                    getRes(property2, responseDataTmp2)
+                                                }
                                             }else{
                                                 responseDataTmp2[p] = property2.description;
                                             }

@@ -111,7 +111,6 @@ li {
             font-size: 18px;
         }
     }
-
     #menu_toggle:hover {
         background: #535769;
     }
@@ -138,9 +137,9 @@ li {
             }
 
             .el-menu-item {
-                min-width: 190px;
-                height: 40px;
-                line-height: 40px;
+                min-width: 220px;
+                height: 36px;
+                line-height: 36px;
                 color: #fff;
                 overflow: hidden;
                 background: #2d303c;
@@ -161,7 +160,7 @@ li {
     }
 
     .el-menu:not(.el-menu--collapse) {
-        width: 190px;
+        width: 220px;
     }
 }
 
@@ -170,7 +169,7 @@ li {
 }
 
 #container-content {
-    margin-left: 190px;
+    margin-left: 220px;
     padding-top: 45px;
 
     #container_module {

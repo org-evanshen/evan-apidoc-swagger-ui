@@ -6,7 +6,9 @@
                     Api uri：
                 </th>
                 <td>
-                    {{host}}/api/{{serviceId}}{{currentApi.path}}
+                    ${HOST}/api/{{serviceId}}{{currentApi.path}}
+                    <br>
+                    HOST根据环境的不同而不同，本地调试时可以用vue和nodejs自带的代理，测试和生产环境可以用nginx代理
                 </td>
             </tr>
             <tr>

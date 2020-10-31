@@ -5,7 +5,7 @@ const ApiDataParse = {
     parseApiDocData(serviceId) {
         var service = Constant.REMOTE_URI[serviceId];
         service.id = serviceId;
-        var url = service.path + 'v2/api-docs'
+        var url = service.path + '/v2/api-docs'
         //var url = '/local-data/apidoc'
         return new Promise((resolve, reject) => {
             console.log(url);

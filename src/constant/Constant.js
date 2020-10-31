@@ -1,6 +1,6 @@
 const Constant = {
     REMOTE_URI: {
-        api:{name: '接口', path: '/api/'},
+        api:{name: '接口', path: '/api'},
         // stat: {name: '统计服务', path: '/api/stat/'},
         // //zuul: {name: '网关', path: '/api/'},
         // system: {name: '系统管理服务', path: '/api/system/'},

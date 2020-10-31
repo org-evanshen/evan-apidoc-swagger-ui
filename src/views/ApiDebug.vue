@@ -83,11 +83,15 @@
                 if (this.currentApi.method == 'post') {
                     VueHttp.post(serviceUrl, data, contentType, false).then((res)=>{
                         handler(res);
+                    }).catch((error) => {
+                        handler(error);
                     });
                 } else {
                     //console.log(params);
                     VueHttp.get(serviceUrl, data, false).then((res) => {
                         handler(res);
+                    }).catch((error) => {
+                        handler(error);
                     });
                 }
             },

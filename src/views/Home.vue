@@ -23,6 +23,7 @@
                 islogin: false,
                 loginUser: {},
                 loginUserForm: {},
+                showGuide:true
             };
         },
         created: async function () {
@@ -77,6 +78,7 @@
                 }
             },
             selectModule(serviceId, moduleName) {
+                this.showGuide = false;
                 this.$router.push({path: "/" + serviceId + '/' + moduleName});
             },
             setModuleTitle(title) {
@@ -141,3 +143,14 @@
         }
     }
 </script>
+<style scoped lang="scss">
+    .guide{
+        h2{
+            margin: 20px 0 15px;
+        }
+
+        line-height: 30px;
+        padding: 20px;
+    }
+
+</style>

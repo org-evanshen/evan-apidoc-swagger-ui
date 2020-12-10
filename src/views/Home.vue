@@ -27,12 +27,44 @@
             };
         },
         created: async function () {
-            var _this = this;
-            var _menus = [];
+            let _this = this;
+            let _menus = [];
 
             for (var serviceId in Constant.REMOTE_URI) {
                 await ApiDataParse.parseApiDocData(serviceId).then((res) => {
-                    _menus.push({'id': res.service.id, 'name': res.service.name, 'modules': res.data.tags});
+                    if(res.service.id === 'merchant') {
+
+                        let tags = res.data.tags
+                        let menus = {}
+
+                        for (let i = 0; i < tags.length; i++) {
+                            let tag = tags[i]
+
+                            let description = tag.description
+                            let index = description.indexOf('::')
+                            let menu, name
+                            if (index < 0) {
+                                menu = '其他'
+                            } else {
+                                menu = description.substring(0, index)
+                                description = description.substring(index + 2)
+                            }
+
+                            let children = menus[menu]
+                            if (!children) {
+                                children = []
+                            }
+                            children.push({name: tag.name, description: description})
+                            menus[menu] = children
+                        }
+
+                        for (let menu in menus) {
+                            let children = menus[menu]
+                            _menus.push({'id': res.service.id + '::' + menu, 'name': menu, 'modules': children});
+                        }
+                    }else{
+                        _menus.push({'id': res.service.id, 'name': res.service.name, 'modules': res.data.tags});
+                    }
                 }).catch((service) => {
                     _menus.push({'id': service.id, 'name': service.name});
                 });
@@ -78,8 +110,16 @@
                 }
             },
             selectModule(serviceId, moduleName) {
+                let index = serviceId.indexOf('::')
+                let _serviceId
+                if (index < 0) {
+                    _serviceId = serviceId
+                } else {
+                    _serviceId = serviceId.substring(0, index)
+                }
+
                 this.showGuide = false;
-                this.$router.push({path: "/" + serviceId + '/' + moduleName});
+                this.$router.push({path: "/" + _serviceId + '/' + moduleName});
             },
             setModuleTitle(title) {
                 this.moduleTitle = title;

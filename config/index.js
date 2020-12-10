@@ -58,8 +58,15 @@ module.exports = {
             //         '^/api/zuul': '',
             //     },
             // },
+/*            '/api': {
+                target: server2 + ':8081',
+                changeOrigin: true,
+                pathRewrite: {
+                    '^/api': '',
+                },
+            },*/
             '/api/merchant': {
-                target: server2 + ':8031',
+                target: server1 + ':8031',
                 changeOrigin: true,
                 pathRewrite: {
                     '^/api/merchant': '',

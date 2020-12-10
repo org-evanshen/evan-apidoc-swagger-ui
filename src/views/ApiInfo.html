@@ -56,32 +56,48 @@
                                 {{param.name}}
                             </td>
                             <td>
-                                <!--{{param}}-->
                                 {{param.description}}
-
                             </td>
                             <td align="center">
                                 <template v-if="param.type=='array'">
-                                    [{{param.items.type}}]
+<!--                                    {{param.items.type}}-->
+                                    string
                                 </template>
                                 <template v-else-if="param.in=='body'">
-                                    <el-popover
-                                        placement="left"
-                                        width="1000"
-                                        trigger="click"
-                                        popper-class="model-popper">
-                                        <!--<div class="code-box" ></div>-->
-                                        <model :modelId="param.type" :serviceId="serviceId"
-                                               :showAllowEmpty="true"></model>
+                                    <template v-if="param.type">
+                                        <el-popover
+                                            placement="left"
+                                            width="1000"
+                                            trigger="click"
+                                            popper-class="model-popper">
+                                            <!--<div class="code-box" ></div>-->
+                                            <model :modelId="param.type" :serviceId="serviceId"
+                                                   :showAllowEmpty="true"></model>
 
-                                        <a href="javascript:void(0);" slot="reference">json</a>
-                                        <!--<a href="javascript:void(0);" @click="toggle(param.name)">{{param.type}}</a>-->
-                                    </el-popover>
+                                            <a href="javascript:void(0);" slot="reference">json</a>
+                                            <!--<a href="javascript:void(0);" @click="toggle(param.name)">{{param.type}}</a>-->
+                                        </el-popover>
+                                    </template>
+                                    <template v-else>
+                                        {{param.schema.type}}
+                                    </template>
                                 </template>
-                                <template v-else>{{param.type}}</template>
+                                <template v-else>
+                                    {{param.type}}
+                                </template>
                             </td>
                             <td align="center">
-                                {{param.in}}
+                                <template v-if="param.in=='body'">
+                                    <template v-if="param.type">
+                                        {{param.in}}
+                                    </template>
+                                    <template v-else>
+                                        query
+                                    </template>
+                                </template>
+                                <template v-else>
+                                    {{param.in}}
+                                </template>
                             </td>
                             <td align="center">
                                 {{param.required}}

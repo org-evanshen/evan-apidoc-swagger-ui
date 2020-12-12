@@ -118,7 +118,7 @@ li {
 
     /*左侧*/
     #container_menu {
-        height: calc(100% - 45px);
+        height: calc(100% - 30px);
         overflow: auto;
         border-right: 0px;
         background: #324157;
@@ -220,6 +220,7 @@ li {
             //padding-bottom: 5px;
             //margin-bottom: 3px;
             //list-style-position: inside;
+            height: calc(100% - 95px);
             li {
                 padding: 10px 17px;
                 width: 100%;

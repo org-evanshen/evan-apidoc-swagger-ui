@@ -23,10 +23,13 @@
                 islogin: false,
                 loginUser: {},
                 loginUserForm: {},
-                showGuide:true
+                showGuide:false
             };
         },
         created: async function () {
+            let path = this.$route.path
+            this.showGuide = path === '/'
+
             let _this = this;
             let _menus = [];
 

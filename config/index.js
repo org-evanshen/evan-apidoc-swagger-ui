@@ -80,7 +80,7 @@ module.exports = {
                 },
             },
             '/api/system': {
-                target: server3 + ':8041',
+                target: server2 + ':8041',
                 changeOrigin: true,
                 pathRewrite: {
                     '^/api/system': '',

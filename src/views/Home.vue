@@ -186,14 +186,130 @@
         }
     }
 </script>
-<style scoped lang="scss">
-    .guide{
-        h2{
-            margin: 20px 0 15px;
+<style lang="scss">
+    /*顶部 banner*/
+    #container-banner {
+        position: fixed;
+        height: 45px;
+        background: #324157;
+        color: #bfcbd9;
+        position: fixed;
+        width: 100%;
+        z-index: 50;
+
+        .banner-left {
+            display: inline-block;
+            height: 45px;
+            color: #f6f6f6;
+            line-height: 45px;
+            text-align: center;
+            width: 180px;
+
+            a {
+                font-size: 18px;
+                color: #fff;
+            }
         }
 
-        line-height: 30px;
-        padding: 20px;
+        .banner-right {
+            float: right;
+            padding-right: 20px;
+
+            span {
+                color: #fff;
+            }
+        }
     }
 
+    #container-sidebar {
+        position: fixed;
+        background: #324157;
+        position: fixed;
+        height: 100vh;
+        overflow-y: hidden;
+        padding-top: 45px;
+
+        /*左侧导航折叠*/
+        #menu_toggle {
+            display: inline-block;
+            width: 100%;
+            cursor: pointer;
+            text-align: center;
+            padding: 6px;
+
+            i {
+                font-size: 18px;
+            }
+        }
+
+        #menu_toggle:hover {
+            background: #535769;
+        }
+
+        /*菜单*/
+        #container_menu {
+            height: calc(100% - 30px);
+            overflow: auto;
+            border-right: 0px;
+            background: #324157;
+
+            .el-submenu {
+                .el-submenu__title {
+                    height: 52px;
+                    line-height: 52px;
+
+                    span {
+                        color: #fff;
+                    }
+                }
+
+                .el-submenu__title:hover {
+                    background-color: #535769;
+                }
+
+                .el-menu-item {
+                    min-width: 220px;
+                    height: 36px;
+                    line-height: 36px;
+                    color: #fff;
+                    overflow: hidden;
+                    background: #2d303c;
+
+                    span {
+                        //font-size: 12px;
+                    }
+                }
+
+                .el-menu-item:hover {
+                    background: #585b67;
+                }
+
+                .el-menu-item.is-active {
+                    background: #469efd;
+                }
+            }
+        }
+
+        .el-menu:not(.el-menu--collapse) {
+            width: 220px;
+        }
+    }
+
+    #container-content.collapse {
+        margin-left: 65px;
+    }
+
+    #container-content {
+        margin-left: 220px;
+        padding-top: 45px;
+
+        .guide{
+            h2{
+                margin: 20px 0 15px;
+            }
+
+            line-height: 30px;
+            padding: 20px;
+        }
+    }
 </style>
